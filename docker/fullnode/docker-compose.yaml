@@ -6,9 +6,9 @@ services:
     ports:
     - "9000:9000"
     volumes:
-    - ./fullnode-template.yaml:/opt/sui-node/fullnode.yaml:ro
-    - ./genesis.blob:/opt/sui-node/genesis.blob:ro
-    - suidb:/opt/sui-node/suidb
-    command: ["/usr/local/bin/sui-node", "--config-path", "/opt/sui-node/fullnode.yaml"]
+    - ./fullnode-template.yaml:/sui/fullnode.yaml:ro
+    - ./genesis.blob:/sui/genesis.blob:ro
+    - suidb:/sui/suidb:rw
+    command: ["/usr/local/bin/sui-node", "--config-path", "fullnode.yaml"]
 volumes:
   suidb:

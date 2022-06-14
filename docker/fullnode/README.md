@@ -8,38 +8,27 @@ Run a Sui DevNet fullnode locally for testing/experimenting by following the ins
 
 # prerequisites
 
-- docker / docker compose
+Install docker / docker compose:
     - https://docs.docker.com/get-docker/
     - https://docs.docker.com/compose/install/
 
 # run
 
+## fullnode config
+
 Get the latest version of the fullnode config [here](https://github.com/MystenLabs/sui/raw/main/crates/sui-config/data/fullnode-template.yaml), or:
 
-```wget https://github.com/MystenLabs/sui/raw/main/crates/sui-config/data/fullnode-template.yaml```
+> ```wget https://github.com/MystenLabs/sui/raw/main/crates/sui-config/data/fullnode-template.yaml```
 
+## sui devnet genesis
 Get the latest version of the Sui DevNet genesis blob [here](https://github.com/MystenLabs/sui-genesis/raw/main/devnet/genesis.blob), or:
 
-```wget https://github.com/MystenLabs/sui-genesis/raw/main/devnet/genesis.blob```
-
-Update the json-rpc-address and the genesis-file-location in the fullnode config.
-
-- macos:
-
-```sed -i '' -e 's/genesis.blob/\/opt\/sui-node\/genesis.blob/' fullnode-template.yaml```
-
-```sed -i '' -e 's/127.0.0.1/0.0.0.0/' fullnode-template.yaml```
-
-- linux / gnu sed:
-
-```sed -i 's/genesis.blob/\/opt\/sui-node\/genesis.blob/' fullnode-template.yaml```
-
-```sed -i 's/127.0.0.1/0.0.0.0/' fullnode-template.yaml```
+> ```wget https://github.com/MystenLabs/sui-genesis/raw/main/devnet/genesis.blob```
 
 
-Start the fullnode:
+## start the fullnode
 
-```docker-compose up```
+> ```docker-compose up```
 
 # test
 
@@ -61,25 +50,63 @@ curl --location --request POST 'http://127.0.0.1:9000/' \
     --data-raw '{ "jsonrpc":"2.0", "id":1, "method":"sui_getTransaction", "params":["$RECENT_TXN_FROM_ABOVE"] }'
 ```
 
+# use your fullnode with explorer 
+
+- run a local-rpc server
+- open https://explorer.devnet.sui.io and use the Local option
+
 # troubleshoot / tips / documentation
 
-Start the fullnode in detached mode:
+## start the fullnode in detached mode
 
-```docker-compose up -d```
+> ```docker-compose up -d```
 
-Stop the fullnode using:
+## stop the fullnode:
 
-```docker-compose stop```
+> ```docker-compose stop```
+
+## reset the environment
 
 Take everything down, removing the container and volume. Use this to start completely fresh (image, config, or genesis updates):
 
-```docker-compose down --volumes```
+> ```docker-compose down --volumes```
 
-Learn more about sui:
+## inspect the state of a running fullnode
+
+Get the running container id:
+
+> ```docker ps```
+
+Connect to a bash shell inside the container:
+
+> ```docker exec -it $CONTAINER_ID /bin/bash```
+
+Inspect the database:
+
+> ```ls -la suidb/```
+
+## local rpc connectivity issues
+
+For linux, update the json-rpc-address in the fullnode config to listen on all addresses:
+
+> ```sed -i 's/127.0.0.1/0.0.0.0/' fullnode-template.yaml```
+
+```
+-json-rpc-address: "127.0.0.1:9000"
++json-rpc-address: "0.0.0.0:9000"
+```
+
+## install wget and curl
+
+On MacOS using [homebrew](https://brew.sh/):
+
+> ```brew install wget curl```
+
+## learn more about sui
 - https://docs.sui.io/learn
 
-Learn more about building and running a fullnode natively:
+## learn more about building and running a fullnode natively
 - https://docs.sui.io/build/fullnode
 
-Learn more about docker-compose:
+## learn more about docker-compose
 - https://docs.docker.com/compose/gettingstarted/
