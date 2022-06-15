@@ -6,6 +6,7 @@ import { useEffect, useState, useCallback } from 'react';
 import DisplayBox from '../../components/displaybox/DisplayBox';
 import Longtext from '../../components/longtext/Longtext';
 import OwnedObjects from '../../components/ownedobjects/OwnedObjects';
+import codestyle from '../../styles/bytecode.module.css';
 import theme from '../../styles/theme.module.css';
 import { type AddressOwner } from '../../utils/api/DefaultRpcClient';
 import { parseImageURL } from '../../utils/objectUtils';
@@ -369,7 +370,9 @@ function ObjectLoaded({ data }: { data: DataType }) {
                                     {properties.map(([key, value], index) => (
                                         <div key={`property-${index}`}>
                                             <div>{prepLabel(key)}</div>
-                                            <div>{value}</div>
+                                            <div className={codestyle.code}>
+                                                {value}
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
