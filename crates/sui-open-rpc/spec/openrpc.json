@@ -1184,14 +1184,19 @@
             "description": "Move-specific event",
             "type": "object",
             "required": [
-              "moveEvent"
+              "MoveEvent"
             ],
             "properties": {
-              "moveEvent": {
+              "MoveEvent": {
                 "type": "object",
                 "required": [
                   "bcs",
                   "fields",
+                  "function",
+                  "module",
+                  "packageId",
+                  "sender",
+                  "transactionDigest",
                   "type"
                 ],
                 "properties": {
@@ -1200,6 +1205,21 @@
                   },
                   "fields": {
                     "$ref": "#/components/schemas/MoveStruct"
+                  },
+                  "function": {
+                    "type": "string"
+                  },
+                  "module": {
+                    "type": "string"
+                  },
+                  "packageId": {
+                    "$ref": "#/components/schemas/ObjectID"
+                  },
+                  "sender": {
+                    "$ref": "#/components/schemas/SuiAddress"
+                  },
+                  "transactionDigest": {
+                    "$ref": "#/components/schemas/TransactionDigest"
                   },
                   "type": {
                     "type": "string"
@@ -1213,17 +1233,25 @@
             "description": "Module published",
             "type": "object",
             "required": [
-              "publish"
+              "Publish"
             ],
             "properties": {
-              "publish": {
+              "Publish": {
                 "type": "object",
                 "required": [
-                  "packageId"
+                  "packageId",
+                  "sender",
+                  "transactionDigest"
                 ],
                 "properties": {
                   "packageId": {
                     "$ref": "#/components/schemas/ObjectID"
+                  },
+                  "sender": {
+                    "$ref": "#/components/schemas/SuiAddress"
+                  },
+                  "transactionDigest": {
+                    "$ref": "#/components/schemas/TransactionDigest"
                   }
                 }
               }
@@ -1234,10 +1262,10 @@
             "description": "Transfer objects to new address / wrap in another object / coin",
             "type": "object",
             "required": [
-              "transferObject"
+              "TransferObject"
             ],
             "properties": {
-              "transferObject": {
+              "TransferObject": {
                 "type": "object",
                 "required": [
                   "destinationAddr",
@@ -1267,11 +1295,27 @@
             "description": "Delete object",
             "type": "object",
             "required": [
-              "deleteObject"
+              "DeleteObject"
             ],
             "properties": {
-              "deleteObject": {
-                "$ref": "#/components/schemas/ObjectID"
+              "DeleteObject": {
+                "type": "object",
+                "required": [
+                  "object_id",
+                  "sender",
+                  "transaction_digest"
+                ],
+                "properties": {
+                  "object_id": {
+                    "$ref": "#/components/schemas/ObjectID"
+                  },
+                  "sender": {
+                    "$ref": "#/components/schemas/SuiAddress"
+                  },
+                  "transaction_digest": {
+                    "$ref": "#/components/schemas/TransactionDigest"
+                  }
+                }
               }
             },
             "additionalProperties": false
@@ -1280,23 +1324,23 @@
             "description": "New object creation",
             "type": "object",
             "required": [
-              "newObject"
+              "NewObject"
             ],
             "properties": {
-              "newObject": {
+              "NewObject": {
                 "$ref": "#/components/schemas/ObjectID"
               }
             },
             "additionalProperties": false
           },
           {
-            "description": "Epooch change",
+            "description": "Epoch change",
             "type": "object",
             "required": [
-              "epochChange"
+              "EpochChange"
             ],
             "properties": {
-              "epochChange": {
+              "EpochChange": {
                 "type": "integer",
                 "format": "uint64",
                 "minimum": 0.0
@@ -1308,10 +1352,10 @@
             "description": "New checkpoint",
             "type": "object",
             "required": [
-              "checkpoint"
+              "Checkpoint"
             ],
             "properties": {
-              "checkpoint": {
+              "Checkpoint": {
                 "type": "integer",
                 "format": "uint64",
                 "minimum": 0.0
@@ -1330,7 +1374,7 @@
             ],
             "properties": {
               "Package": {
-                "type": "string"
+                "$ref": "#/components/schemas/ObjectID"
               }
             },
             "additionalProperties": false
@@ -1375,12 +1419,21 @@
           {
             "type": "object",
             "required": [
-              "MoveEventFields"
+              "MoveEventField"
             ],
             "properties": {
-              "MoveEventFields": {
+              "MoveEventField": {
                 "type": "object",
-                "additionalProperties": true
+                "required": [
+                  "path",
+                  "value"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "value": true
+                }
               }
             },
             "additionalProperties": false
@@ -1393,6 +1446,18 @@
             "properties": {
               "SenderAddress": {
                 "$ref": "#/components/schemas/SuiAddress"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "EventType"
+            ],
+            "properties": {
+              "EventType": {
+                "$ref": "#/components/schemas/EventType"
               }
             },
             "additionalProperties": false
@@ -1483,6 +1548,19 @@
             },
             "additionalProperties": false
           }
+        ]
+      },
+      "EventType": {
+        "description": "Auto-generated discriminant enum variants",
+        "type": "string",
+        "enum": [
+          "MoveEvent",
+          "Publish",
+          "TransferObject",
+          "DeleteObject",
+          "NewObject",
+          "EpochChange",
+          "Checkpoint"
         ]
       },
       "ExecutionStatus": {
