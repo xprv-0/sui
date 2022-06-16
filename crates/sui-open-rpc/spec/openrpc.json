@@ -1196,7 +1196,6 @@
                   "module",
                   "packageId",
                   "sender",
-                  "transactionDigest",
                   "type"
                 ],
                 "properties": {
@@ -1218,9 +1217,6 @@
                   "sender": {
                     "$ref": "#/components/schemas/SuiAddress"
                   },
-                  "transactionDigest": {
-                    "$ref": "#/components/schemas/TransactionDigest"
-                  },
                   "type": {
                     "type": "string"
                   }
@@ -1240,8 +1236,7 @@
                 "type": "object",
                 "required": [
                   "packageId",
-                  "sender",
-                  "transactionDigest"
+                  "sender"
                 ],
                 "properties": {
                   "packageId": {
@@ -1249,9 +1244,6 @@
                   },
                   "sender": {
                     "$ref": "#/components/schemas/SuiAddress"
-                  },
-                  "transactionDigest": {
-                    "$ref": "#/components/schemas/TransactionDigest"
                   }
                 }
               }
@@ -1301,19 +1293,27 @@
               "DeleteObject": {
                 "type": "object",
                 "required": [
+                  "function",
+                  "module",
                   "object_id",
-                  "sender",
-                  "transaction_digest"
+                  "package_id",
+                  "sender"
                 ],
                 "properties": {
+                  "function": {
+                    "type": "string"
+                  },
+                  "module": {
+                    "type": "string"
+                  },
                   "object_id": {
+                    "$ref": "#/components/schemas/ObjectID"
+                  },
+                  "package_id": {
                     "$ref": "#/components/schemas/ObjectID"
                   },
                   "sender": {
                     "$ref": "#/components/schemas/SuiAddress"
-                  },
-                  "transaction_digest": {
-                    "$ref": "#/components/schemas/TransactionDigest"
                   }
                 }
               }
@@ -1335,8 +1335,7 @@
                   "object_id",
                   "package_id",
                   "recipient",
-                  "sender",
-                  "transaction_digest"
+                  "sender"
                 ],
                 "properties": {
                   "function": {
@@ -1356,9 +1355,6 @@
                   },
                   "sender": {
                     "$ref": "#/components/schemas/SuiAddress"
-                  },
-                  "transaction_digest": {
-                    "$ref": "#/components/schemas/TransactionDigest"
                   }
                 }
               }

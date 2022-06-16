@@ -244,7 +244,6 @@ pub fn publish<E: Debug, S: ResourceResolver<Error = E> + ModuleResolver<Error =
     let vm = verify_and_link(state_view, &modules, package_id, natives, gas_status)?;
     state_view.log_event(Event::Publish {
         sender: ctx.sender(),
-        transaction_digest: ctx.digest(),
         package_id,
     });
     store_package_and_init_modules(state_view, &vm, modules, ctx, gas_status)
@@ -494,8 +493,10 @@ fn process_successful_execution<
                         }
                         Some(_) => {
                             state_view.log_event(Event::delete_object(
+                                ObjectID::from(*module_id.address()),
+                                Identifier::from(module_id.name()),
+                                function.clone(),
                                 ctx.sender(),
-                                ctx.digest(),
                                 *obj_id,
                             ));
                             state_view.delete_object(obj_id, id.version(), DeleteKind::Normal)
@@ -509,8 +510,10 @@ fn process_successful_execution<
                             // object_id and version pair must be unique. Hence for any object that's just unwrapped,
                             // we force incrementing its version number again to make it `v+2` before writing to the store.
                             state_view.log_event(Event::delete_object(
+                                ObjectID::from(*module_id.address()),
+                                Identifier::from(module_id.name()),
+                                function.clone(),
                                 ctx.sender(),
-                                ctx.digest(),
                                 *obj_id,
                             ));
                             state_view.delete_object(
@@ -538,7 +541,6 @@ fn process_successful_execution<
                         ObjectID::from(*module_id.address()),
                         Identifier::from(module_id.name()),
                         function.clone(),
-                        ctx.digest(),
                         ctx.sender(),
                         s,
                         event_bytes,
@@ -606,7 +608,6 @@ fn handle_transfer<
                         ObjectID::from(*module_id.address()),
                         Identifier::from(module_id.name()),
                         function.clone(),
-                        tx_digest,
                         sender,
                         recipient,
                         obj_id,
