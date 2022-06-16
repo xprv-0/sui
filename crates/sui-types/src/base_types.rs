@@ -337,6 +337,10 @@ impl TxContext {
         TransactionDigest::new(self.digest.clone().try_into().unwrap())
     }
 
+    pub fn sender(&self) -> SuiAddress {
+        SuiAddress::from(ObjectID(self.sender))
+    }
+
     pub fn to_vec(&self) -> Vec<u8> {
         bcs::to_bytes(&self).unwrap()
     }

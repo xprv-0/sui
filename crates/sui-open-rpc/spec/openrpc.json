@@ -16,6 +16,23 @@
   },
   "methods": [
     {
+      "name": "sui_Unknown method name",
+      "tags": [
+        {
+          "name": "Event Subscription"
+        }
+      ],
+      "params": [
+        {
+          "name": "filter",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/EventFilter"
+          }
+        }
+      ]
+    },
+    {
       "name": "sui_executeTransaction",
       "tags": [
         {
@@ -1298,6 +1315,170 @@
                 "type": "integer",
                 "format": "uint64",
                 "minimum": 0.0
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "EventFilter": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "Package"
+            ],
+            "properties": {
+              "Package": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "Module"
+            ],
+            "properties": {
+              "Module": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "Function"
+            ],
+            "properties": {
+              "Function": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "description": "Move StructTag string value of the event type e.g. `0x2::DevNetNFT::MintNFTEvent`",
+            "type": "object",
+            "required": [
+              "MoveEventType"
+            ],
+            "properties": {
+              "MoveEventType": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "MoveEventFields"
+            ],
+            "properties": {
+              "MoveEventFields": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "SenderAddress"
+            ],
+            "properties": {
+              "SenderAddress": {
+                "$ref": "#/components/schemas/SuiAddress"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "ObjectId"
+            ],
+            "properties": {
+              "ObjectId": {
+                "$ref": "#/components/schemas/ObjectID"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "All"
+            ],
+            "properties": {
+              "All": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EventFilter"
+                }
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "Any"
+            ],
+            "properties": {
+              "Any": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EventFilter"
+                }
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "And"
+            ],
+            "properties": {
+              "And": {
+                "type": "array",
+                "items": [
+                  {
+                    "$ref": "#/components/schemas/EventFilter"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EventFilter"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "Or"
+            ],
+            "properties": {
+              "Or": {
+                "type": "array",
+                "items": [
+                  {
+                    "$ref": "#/components/schemas/EventFilter"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EventFilter"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2
               }
             },
             "additionalProperties": false
