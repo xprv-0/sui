@@ -1328,7 +1328,39 @@
             ],
             "properties": {
               "NewObject": {
-                "$ref": "#/components/schemas/ObjectID"
+                "type": "object",
+                "required": [
+                  "function",
+                  "module",
+                  "object_id",
+                  "package_id",
+                  "recipient",
+                  "sender",
+                  "transaction_digest"
+                ],
+                "properties": {
+                  "function": {
+                    "type": "string"
+                  },
+                  "module": {
+                    "type": "string"
+                  },
+                  "object_id": {
+                    "$ref": "#/components/schemas/ObjectID"
+                  },
+                  "package_id": {
+                    "$ref": "#/components/schemas/ObjectID"
+                  },
+                  "recipient": {
+                    "$ref": "#/components/schemas/Owner"
+                  },
+                  "sender": {
+                    "$ref": "#/components/schemas/SuiAddress"
+                  },
+                  "transaction_digest": {
+                    "$ref": "#/components/schemas/TransactionDigest"
+                  }
+                }
               }
             },
             "additionalProperties": false
